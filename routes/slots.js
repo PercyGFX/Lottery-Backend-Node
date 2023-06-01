@@ -45,35 +45,73 @@ router.post('/bookslots',authMiddleware , (req,res)=> {
     const inputData = req.body;
     const { lotteryTypeId, data } = inputData;
 
-    let totalPointsNeeded = data.length * 200
 
-            
 
-            let successfulInserts = 0;
-            let failedInserts = 0;
 
-            data.forEach(item => {
-                const { id } = item;
 
-                connection.query(
-                    'INSERT INTO usertickets (uid, purchasedNo, date, timestamp, lotteryTypeId) VALUES (?, ?, ? , ?, ?)',
-                    [uuid, id, date, mysqlTimestamp,lotteryTypeId ],
-                    (error, results, fields) => {
-                        if (error) {
-                            res.status(401).json({ message: 'Something Went Wrong' });
-                            failedInserts++;
-                        } else {
-                            successfulInserts++;
-                        }
+            let totalPointsNeeded = data.length * 200; // Calculate the total points needed
 
-                        if (successfulInserts + failedInserts === data.length) {
-                            console.log('Records inserted successfully:', successfulInserts);
-                            res.status(200).json({ message: 'Records inserted successfully' });
-                        }
+// Retrieve the user's points from the database based on the UUID
+            connection.query(
+                'SELECT userbalance FROM user WHERE uuid = ?',
+                [uuid],
+                (error, results, fields) => {
+                    if (error) {
+                        res.status(500).json({ message: 'Error retrieving user points' });
+                        return;
                     }
-                );
-            });
 
+                    const userPoints = results[0].userbalance;
+
+                    console.log(userPoints)
+
+                    if (userPoints >= totalPointsNeeded) {
+                        let successfulInserts = 0;
+                        let failedInserts = 0;
+
+                        data.forEach(item => {
+                            const { id } = item;
+
+                            connection.query(
+                                'INSERT INTO usertickets (uid, purchasedNo, date, timestamp, lotteryTypeId) VALUES (?, ?, ? , ?, ?)',
+                                [uuid, id, date, mysqlTimestamp, lotteryTypeId],
+                                (error, results, fields) => {
+                                    if (error) {
+                                        failedInserts++;
+                                    } else {
+                                        successfulInserts++;
+                                    }
+
+                                    if (successfulInserts + failedInserts === data.length) {
+                                        if (failedInserts > 0) {
+                                            res.status(401).json({ message: 'Something Went Wrong' });
+                                        } else {
+                                            // Reduce the points from the userbalance column
+                                            const updatedUserPoints = userPoints - totalPointsNeeded;
+                                            connection.query(
+                                                'UPDATE user SET userbalance = ? WHERE uuid = ?',
+                                                [updatedUserPoints, uuid],
+                                                (error, results, fields) => {
+                                                    if (error) {
+                                                        res.status(500).json({ message: 'Error updating user points' });
+                                                    } else {
+                                                        console.log('Records inserted successfully:', successfulInserts);
+                                                        res.status(200).json({ message: 'Records inserted successfully' });
+                                                    }
+                                                }
+                                            );
+                                        }
+                                    }
+                                }
+                            );
+                        });
+                    } else {
+                        res.status(401).json({ message: 'Insufficient points for all records' });
+                    }
+                }
+            );
+
+            //timestap end
         });
 
 } )
