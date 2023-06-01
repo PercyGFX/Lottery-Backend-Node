@@ -48,12 +48,15 @@ const login = (req , res) =>{
                             } else {
                                 console.log('new user added');
                                 req.session.phone = phone
+                                req.session.uuid = userId
                                 res.status(200).json({ message: "Login successful", user: phone, uuid: userId });
                             }
                         });
                     } else {
-                        console.log(result);
-                        res.status(200).json({ message: "Login successful", data: result});
+
+                        req.session.phone = phone
+                        req.session.uuid = result[0].uuid
+                        res.status(200).json({ message: "Login successful", user: result[0].phonenumber, uuid: result[0].uuid });
                     }
 
                 })
