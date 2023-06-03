@@ -4,8 +4,10 @@ const session = require('express-session')
 const bodyParser = require('body-parser');
 const login = require('./routes/login.js')
 const bookslot = require('./routes/slots')
+const cors = require('cors')
 
 
+app.use(cors())
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
