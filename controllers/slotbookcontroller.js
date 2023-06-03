@@ -47,10 +47,7 @@ const slotbook = (req,res) => {
             const uuid = req.session.uuid
             const inputData = req.body;
             const { lotteryTypeId, data } = inputData;
-
-
-
-
+            
 
             let totalPointsNeeded = data.length * 200; // Calculate the total points needed
 
