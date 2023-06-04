@@ -65,3 +65,19 @@ Example Preview
 
 
 ```
+
+#### http://localhost:5000/myslots GET
+
+```bash
+Example Preview
+
+{
+    "purchasedNo": [
+        75,
+        51
+    ]
+}
+
+
+
+```
