@@ -34,8 +34,10 @@ const slotbook = (req,res) => {
     }
 
 // Example usage: Get current date and time in Sri Lanka
-    getSriLankaDateTime().then(({ date, time, timestamp, mysqlTimestamp }) => {
-        const currentHour = parseInt(time.slice(0, 2), 10);
+    getSriLankaDateTime().then(result => {
+        if (result) {
+            const { date, time, timestamp, mysqlTimestamp } = result;
+            const currentHour = parseInt(time.slice(0, 2), 10);
 
         //Data cannot be added after 7pm
         if (isNaN(currentHour) || currentHour >= 19) {
@@ -44,8 +46,14 @@ const slotbook = (req,res) => {
         }
 
         //get data from JSON post & session
-            const uuid = req.session.uuid
+
             const inputData = req.body;
+        console.log(inputData)
+
+
+        const uuid = req.session.uuid
+
+        console.log(uuid)
             const { lotteryTypeId, data } = inputData;
             
 
@@ -110,6 +118,10 @@ const slotbook = (req,res) => {
             );
 
             //timestap end
+        } else {
+            res.status(500).json({ success: false, message: 'Error retrieving Sri Lanka date, time, and timestamp' });
+        }
+
         });
 
 }
