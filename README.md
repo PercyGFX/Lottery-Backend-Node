@@ -1,9 +1,34 @@
+
 # NodeJS Backend for Lottery App
 
-[An AI chatbot API + Fronend with Tensorflow + flask](https://lottery-anjmnijql-percygfx.vercel.app/)
+An AI chatbot API + Fronend with Tensorflow + flask
 
 
 
+
+## Installation
+
+Install my-project with npm
+
+```bash
+  npm install my-project
+  cd my-project
+```
+    
+## API Reference
+
+#### http://localhost:5000/login  POST
+
+```bash
+{
+    
+    "phone":"+94770000070",
+    "token": "eyJhbGciOiJSUz"
+
+}
+
+
+```
 
 #### http://localhost:5000/bookslots  POST
 
