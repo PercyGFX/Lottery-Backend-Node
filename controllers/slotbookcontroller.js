@@ -42,6 +42,7 @@ const slotbook = (req,res) => {
 
         //Data cannot be added after 7pm
         if (isNaN(currentHour) || currentHour >= 19) {
+            console.log ("current hour" +  currentHour)
             res.status(401).json({success: false, message: 'Data cannot be added after 7 PM' });
             return;
         }
@@ -164,12 +165,12 @@ const getbookedlots = (req,res)=>{
                         return row.purchasedNo
                     })
 
-                    res.status(200).json({ purchasedNo })
+                    res.status(200).json(purchasedNo )
                 }
             })
 
 
-            //code here
+
 
         }else {
             res.status(500).json({ success: false, message: 'Error retrieving Sri Lanka date, time, and timestamp' });
@@ -180,4 +181,57 @@ const getbookedlots = (req,res)=>{
 
 }
 
-module.exports = {slotbook , getbookedlots}
+//get all booked slots to a user
+
+const myslots = (req,res)=>{
+
+    async function getSriLankaDateTime() {
+        try {
+            const response = await axios.get('http://worldtimeapi.org/api/timezone/Asia/Colombo');
+            const { datetime } = response.data;
+            const serverDateTime = new Date(datetime);
+            const date = serverDateTime.toLocaleDateString('en-US');
+
+            return { date };
+        } catch (error) {
+            console.error('Error retrieving Sri Lanka date, time, and timestamp:', error.message);
+            return null;
+        }
+    }
+
+    getSriLankaDateTime().then(result => {
+        if (result) {
+            const {date} = result;
+
+            const uuid = req.session.uuid
+            console.log('my slots ' + uuid )
+
+            const q = "SELECT * from usertickets WHERE date=(?) AND uid=(?)"
+            const values = [date, uuid ]
+            connection.execute(q,values, (err, result)=> {
+
+                if(err) {
+                    res.status(400).json({success:false, message: 'Error getting booked slots for current date'})
+                }else {
+
+                    const purchasedNo = result.map((row)=>{
+
+                        return row.purchasedNo
+                    })
+
+                    res.status(200).json(purchasedNo )
+                }
+            })
+
+
+
+
+        }else {
+            res.status(500).json({ success: false, message: 'Error retrieving Sri Lanka date, time, and timestamp' });
+        }
+
+
+    })
+}
+
+module.exports = {slotbook , getbookedlots, myslots}
