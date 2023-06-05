@@ -72,12 +72,16 @@ Example Preview
 Example Preview
 
 {
-    "purchasedNo": [
-        75,
-        51
-    ]
+    "success": true,
+    "data": [
+        71,
+        72,
+        74
+    ],
+    "date": "6/5/2023",
+    "balance": 100,
+    "uuid": "ade3f6ca-d2d1-402e-a686-8a95155ac53e"
 }
-
 
 
 ```
