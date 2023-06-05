@@ -87,6 +87,7 @@ const slotbook = (req,res) => {
                                             if (successfulInserts + failedInserts === data.length) {
                                                 if (failedInserts > 0) {
                                                     res.status(401).json({success: false, message: 'Something Went Wrong' });
+                                                    return;
                                                 } else {
                                                     // Reduce the points from the userbalance column
                                                     const updatedUserPoints = userPoints - totalPointsNeeded;
@@ -96,6 +97,7 @@ const slotbook = (req,res) => {
                                                         (error, results, fields) => {
                                                             if (error) {
                                                                 res.status(400).json({ message: 'Error updating user points' });
+                                                                return;
                                                             } else {
                                                                 console.log('Records inserted successfully:', successfulInserts);
                                                                 res.status(200).json({success: true, message: 'Records inserted successfully' });
@@ -195,7 +197,21 @@ const myslots = (req,res)=>{
                         return row.purchasedNo
                     })
 
-                    res.status(200).json(purchasedNo )
+                    const q = "SELECT userbalance FROM user WHERE uuid=(?)"
+                    const values = [uuid]
+                    connection.execute(q,values,(err, result)=>{
+
+                        if(err) {
+                            res.status(400).json({success:false, message: 'database error'})
+
+                        }else {
+                            const balance = result[0].userbalance
+                            res.status(200).json({success: true, data :purchasedNo, date:date, balance:balance, uuid:uuid} )
+                        }
+                    })
+
+
+
                 }
             })
 
