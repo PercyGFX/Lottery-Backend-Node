@@ -17,7 +17,7 @@ const slotbook = (req,res) => {
             const currentHour = parseInt(time.slice(0, 2), 10);
 
         //Data cannot be added after 7pm
-        if (isNaN(currentHour) || currentHour >= 19) {
+        if (isNaN(currentHour) || currentHour >= 20) {
             console.log ("current hour" +  currentHour)
             res.status(401).json({success: false, message: 'Data cannot be added after 7 PM' });
             return;
@@ -43,11 +43,10 @@ const slotbook = (req,res) => {
 
             console.log(idsToCheck.join(','))
 
-            const idsToCheckPlaceholders = idsToCheck.map(() => "?").join(",");
-            const q2 = `SELECT purchasedNo FROM usertickets WHERE purchasedNo IN (${idsToCheckPlaceholders}) AND date = ?`;
-            const values2 = [...idsToCheck, date];
-            
-            connection.execute(q2, values2, (err, result) => {
+            const q2 = "SELECT purchasedNo FROM usertickets WHERE purchasedNo IN (?) AND date = ?"
+            const values2 = [idsToCheck, date]
+
+            connection.query(q2, values2, (err, result) => {
 
                 if(err){
 
