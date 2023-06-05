@@ -216,8 +216,6 @@ const myslots = (req,res)=>{
             })
 
 
-
-
         }else {
             res.status(500).json({ success: false, message: 'Error retrieving Sri Lanka date, time, and timestamp' });
         }
@@ -226,4 +224,24 @@ const myslots = (req,res)=>{
     })
 }
 
-module.exports = {slotbook , getbookedlots, myslots}
+const historybook = (req,res)=>{
+
+    res.send('hello')
+}
+
+const lotterytypes = (req,res)=>{
+
+    const q = "SELECT id,name FROM lotterytypes"
+    connection.execute(q,(err,result)=>{
+
+        if(err){
+            res.status(400).json({success:false, message: 'database error'})
+        } else {
+
+            console.log(result)
+            res.status(200).json({success:true, data: result})
+        }
+    })
+}
+
+module.exports = {slotbook , getbookedlots, myslots, historybook, lotterytypes}
