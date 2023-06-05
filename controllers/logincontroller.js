@@ -70,4 +70,9 @@ const login = (req , res) =>{
         });
 }
 
-module.exports = login
+const logout = (req,res)=>{
+
+    res.send('hello')
+}
+
+module.exports = {login,logout}
