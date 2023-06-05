@@ -40,10 +40,13 @@ const slotbook = (req,res) => {
             //check if numbers are already picked
 
             const idsToCheck = data.map(item => item.id);
-            console.log(idsToCheck)
 
-            const q2 = "SELECT purchasedNo FROM usertickets WHERE purchasedNo IN (?) AND date = ?"
-            const values2 = [idsToCheck.join(','), date]
+            console.log(idsToCheck.join(','))
+
+            const idsToCheckPlaceholders = idsToCheck.map(() => "?").join(",");
+            const q2 = `SELECT purchasedNo FROM usertickets WHERE purchasedNo IN (${idsToCheckPlaceholders}) AND date = ?`;
+            const values2 = [...idsToCheck, date];
+            
             connection.execute(q2, values2, (err, result) => {
 
                 if(err){
@@ -238,7 +241,6 @@ const lotterytypes = (req,res)=>{
             res.status(400).json({success:false, message: 'database error'})
         } else {
 
-            console.log(result)
             res.status(200).json({success:true, data: result})
         }
     })
