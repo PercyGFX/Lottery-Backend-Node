@@ -13,7 +13,7 @@ const slotbook = (req,res) => {
 // Example usage: Get current date and time in Sri Lanka
     getSriLankaDateTime().then(result => {
         if (result) {
-            const { date, time, timestamp, mysqlTimestamp } = result;
+            const { date, time, mysqlTimestamp } = result;
             const currentHour = parseInt(time.slice(0, 2), 10);
 
         //Data cannot be added after 7pm

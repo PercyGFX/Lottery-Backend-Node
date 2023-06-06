@@ -12,7 +12,7 @@ async function getSriLankaDateTime() {
             }
         });
 
-        const { formatted, timestamp } = response.data;
+        const { formatted } = response.data;
 
         const serverDateTime = new Date(formatted);
 
@@ -21,11 +21,11 @@ async function getSriLankaDateTime() {
 
         const mysqlTimestamp = formatted;
 
-        return { date, time, timestamp, mysqlTimestamp };
+        return { date, time, mysqlTimestamp };
     } catch (error) {
         console.error('Error retrieving Sri Lanka date, time, and timestamp:', error.message);
         return null;
     }
-} 
+}
 
 module.exports = getSriLankaDateTime
