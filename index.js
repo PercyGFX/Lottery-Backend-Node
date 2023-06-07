@@ -8,7 +8,7 @@ const cors = require('cors')
 
 app.options('*', cors());
 app.use(cors({
-    origin: '*', // Allow access from any domain
+    origin: 'https://lottery-1rcs-oo8a2mvda-percygfx.vercel.app', 
     credentials: true
 }));
 
