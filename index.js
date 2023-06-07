@@ -7,7 +7,7 @@ const cors = require('cors')
 
 
 app.use(cors({
-    origin: 'https://lottery-1rcs-git-dev-percygfx.vercel.app', // Allow access from any domain
+    origin: true, // Allow access from any domain
     credentials: true
 }));
 
@@ -18,7 +18,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://lottery-1rcs-git-dev-percygfx.vercel.app'); // Allow access from any domain
+    const { origin } = req.headers;
+    if (origin) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Requested-With, Accept');
