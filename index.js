@@ -6,9 +6,9 @@ const bookslot = require('./routes/slots')
 const cors = require('cors')
 
 
-app.options('*', cors());
+
 app.use(cors({
-    origin: 'https://lottery-1rcs-oo8a2mvda-percygfx.vercel.app', 
+    origin: 'https://lottery-1rcs-oo8a2mvda-percygfx.vercel.app',
     credentials: true
 }));
 
