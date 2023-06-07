@@ -13,12 +13,7 @@ async function getSriLankaDateTime() {
         });
 
         const { formatted } = response.data;
-
-        const serverDateTime = new Date(formatted);
-
-        const date = serverDateTime.toLocaleDateString('en-US');
-        const time = serverDateTime.toLocaleTimeString('en-US', { timeZone: 'Asia/Colombo', hour12: false });
-
+        const [date, time] = formatted.split(' ');
         const mysqlTimestamp = formatted;
 
         return { date, time, mysqlTimestamp };
