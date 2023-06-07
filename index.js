@@ -4,6 +4,7 @@ const session = require('express-session')
 const login = require('./routes/login.js')
 const bookslot = require('./routes/slots')
 const cors = require('cors')
+const cookieParser = require('cookie-parser');
 
 
 
@@ -11,6 +12,8 @@ app.use(cors({
     origin: 'https://lottery-1rcs-oo8a2mvda-percygfx.vercel.app',
     credentials: true
 }));
+
+app.use(cookieParser());
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
