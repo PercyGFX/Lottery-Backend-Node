@@ -33,9 +33,12 @@ app.use(session({
     secret: 'damnthisissosecret',
     resave: false,
     saveUninitialized: true,
-    sameSite: none
+    cookie: {
+        secure: false, // Set this to true if using HTTPS
+        httpOnly: true,
+        sameSite: 'none',
+    },
 }));
-
 
 app.use('/', login);
 app.use('/', bookslot)
