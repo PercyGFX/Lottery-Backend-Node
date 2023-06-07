@@ -7,7 +7,10 @@ const cors = require('cors')
 
 
 app.options('*', cors());
-app.use(cors());
+app.use(cors({
+    origin: true, // Allow access from any domain
+    credentials: true
+}));
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -17,7 +20,7 @@ app.use((req, res, next) => {
 
     res.setHeader('Access-Control-Allow-Origin', origin || '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Requested-With, Accept');
     next();
 });
