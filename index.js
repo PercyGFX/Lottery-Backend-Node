@@ -29,16 +29,17 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(session({
-    secret: 'damnthisissosecret',
+app.use(   session({
+    store: store,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    proxy: true,
     cookie: {
-        secure: true, // Set this to true if using HTTPS
-        httpOnly: true,
-        sameSite: 'none',
-    },
-}));
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 48,
+        sameSite: "none",
+    },   }) );
 
 app.use('/', login);
 app.use('/', bookslot)
