@@ -14,7 +14,7 @@ const login = (req , res) =>{
 
     const phone = req.body.phone;
     const token = req.body.token;
-    const api_key = 'AIzaSyCCifumMfBcy8ugxcED55JZdDcuSh35HgM';
+    const api_key = 'AIzaSyApM0vx0n8hywRzo0TGtgwQMyiS5Etm5N4';
     const url = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${api_key}`;
     const requestData = {
         idToken: token,
