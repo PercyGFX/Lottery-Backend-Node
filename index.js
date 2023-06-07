@@ -30,8 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use(   session({
-    store: store,
-    secret: process.env.SESSION_SECRET,
+    secret: 'damnthisissosecret',
     resave: false,
     saveUninitialized: true,
     proxy: true,
