@@ -1,6 +1,10 @@
 
 # NodeJS Backend for Lottery App
 
+![alt text](https://raw.githubusercontent.com/PercyGFX/Lottery-Backend-Node/main/images/login.png)
+
+![alt text](https://raw.githubusercontent.com/PercyGFX/Lottery-Backend-Node/main/images/Homepage.png)
+
 Backend for lottery app
 
 https://lottery-anjmnijql-percygfx.vercel.app/
