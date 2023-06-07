@@ -8,7 +8,7 @@ const cors = require('cors')
 
 app.use(cors(
 
-    {origin: 'https://lottery-anjmnijql-percygfx.vercel.app',
+    {origin: 'https://lottery-1rcs.vercel.app/',
         credentials: true}
 ))
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://lottery-anjmnijql-percygfx.vercel.app'); // Replace with your React app URL
+    res.setHeader('Access-Control-Allow-Origin', 'https://lottery-1rcs.vercel.app/'); // Replace with your React app URL
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Requested-With, Accept');
