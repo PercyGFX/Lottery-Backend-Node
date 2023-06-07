@@ -7,17 +7,14 @@ const cors = require('cors')
 
 
 
-app.use(cors({
-    origin: true,
-    credentials: true
-}));
+app.use(cors());
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.use((req, res, next) => {
     const { origin } = req.headers;
-    
+
     if (origin) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
