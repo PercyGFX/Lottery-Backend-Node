@@ -4,7 +4,6 @@ const session = require('express-session')
 const login = require('./routes/login.js')
 const bookslot = require('./routes/slots')
 const cors = require('cors')
-const cookieParser = require('cookie-parser');
 
 
 
@@ -13,7 +12,7 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(cookieParser());
+
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -34,6 +33,7 @@ app.use(session({
     secret: 'damnthisissosecret',
     resave: false,
     saveUninitialized: true,
+    sameSite: none
 }));
 
 
