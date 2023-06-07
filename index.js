@@ -14,9 +14,8 @@ app.use(express.json());
 
 app.use((req, res, next) => {
     const { origin } = req.headers;
-    if (origin) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
+
+    res.setHeader('Access-Control-Allow-Origin', origin || '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Requested-With, Accept');
