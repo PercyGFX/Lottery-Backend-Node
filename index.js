@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const session = require('express-session')
-const bodyParser = require('body-parser');
 const login = require('./routes/login.js')
 const bookslot = require('./routes/slots')
 const cors = require('cors')
