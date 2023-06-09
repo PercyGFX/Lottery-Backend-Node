@@ -8,7 +8,7 @@ const cors = require('cors')
 
 
 app.use(cors({
-    origin: 'https://lottery-1rcs.vercel.app/',
+    origin: 'https://lottery-1rcs.vercel.app',
     credentials: true
 }));
 
